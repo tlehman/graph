@@ -32,16 +32,15 @@ func TestAddEdge(t *testing.T) {
 func TestString(t *testing.T) {
 	g := graphSixVertices()
 	expected := `digraph {
-  0 -> 2;
   0 -> 5;
-  1 -> 3;
+  0 -> 2;
   1 -> 4;
+  1 -> 3;
   2 -> 3;
   4 -> 2;
   4 -> 5;
   5 -> 2;
-}
-`
+}`
 	actual := g.String()
 	fmt.Println(actual)
 	if actual != expected {

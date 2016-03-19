@@ -19,7 +19,7 @@ type edge struct {
 //      1 -> { y: 2 } -> { y: 3}
 //      2 -> { y: 0 }
 type AdjList struct {
-	edges       []edge
+	edges       []*edge
 	edgeCount   int
 	vertexCount int
 	directed    bool
@@ -29,7 +29,7 @@ type AdjList struct {
 // Builds a new adjaceny list, storing the boolean flag that
 // distinguishes a directed from an undirected graph.
 func New(directed bool) AdjList {
-	edges := make([]edge, 0)
+	edges := make([]*edge, 0)
 	return AdjList{edges: edges, directed: directed}
 }
 
@@ -53,9 +53,10 @@ func (g *AdjList) AddEdge(x, y int) {
 	}
 	if g.edges[x].y == -1 {
 		g.edges[x].y = y
+		g.edges[x].next = nil
 	} else {
-		newnext := &g.edges[x]
-		g.edges[x] = edge{y: y, next: newnext}
+		newnext := g.edges[x]
+		g.edges[x] = &edge{y: y, next: newnext}
 	}
 	g.edgeCount += 1
 	if !g.directed && g.edges[y].y != x {
@@ -75,7 +76,7 @@ func (g *AdjList) AddEdge(x, y int) {
 func (g *AdjList) resizeEdges(size int) {
 	diff := size - len(g.edges)
 	for i := 0; i <= diff; i++ {
-		g.edges = append(g.edges, edge{y: -1})
+		g.edges = append(g.edges, &edge{y: -1})
 		g.vertexset = append(g.vertexset, false)
 	}
 }
@@ -85,8 +86,11 @@ func (g AdjList) String() string {
 	var buffer bytes.Buffer 
 	buffer.WriteString("digraph {\n")
 	for x, e := range g.edges {
-		buffer.WriteString("  ")
-		buffer.WriteString(fmt.Sprintf("%d -> %d\n", x, e.y))
+		if x > -1 && e.y > -1 {
+			for c := e; c != nil; c = c.next {
+				buffer.WriteString(fmt.Sprintf("  %d -> %d;\n", x, c.y))
+			}
+		}
 	}
 	buffer.WriteString("}")
 	return buffer.String()
