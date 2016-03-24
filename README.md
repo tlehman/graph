@@ -28,7 +28,7 @@ By default the graph prints out in the <a href="https://en.wikipedia.org/wiki/DO
 # Algorithms
 After adding everything to the graph, you can perform:
 
-- [ ] Breadth-first search
-- [ ] Find connected components
+- [x] Breadth-first search
+- [x] Find connected components
 - [ ] Find minimum spanning trees (only relevant if weighted)
 - [ ] Compute distances between vertices
