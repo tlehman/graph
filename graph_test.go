@@ -63,7 +63,7 @@ func graphSevenVertices() AdjList {
 
 func TestStringUndirected(t *testing.T) {
 	var g AdjList = graphSevenVertices()
-	expected := `graph {
+	expected := `strict graph {
   0 -- 2;
   1 -- 3;
   1 -- 2;

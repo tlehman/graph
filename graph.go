@@ -95,6 +95,9 @@ func (g AdjList) String() string {
 	    buffer.WriteString("di")
 		arrow = "->"
 	} else {
+		// the strict keyword combines multiple edges in the rendering
+		// undirected graphs are modeled using both edges for convenience
+	    buffer.WriteString("strict ")
 		arrow = "--"
 	}
 	buffer.WriteString("graph {\n")
